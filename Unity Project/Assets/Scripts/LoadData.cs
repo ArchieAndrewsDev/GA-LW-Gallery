@@ -1,15 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Xml;
-using System.Xml.Serialization;
 
 public class LoadData : MonoBehaviour
 {
     public static LoadData _instance;
-
-    public List<RootPointData> loadedData;
 
     private string loadPath;
 
@@ -26,12 +22,10 @@ public class LoadData : MonoBehaviour
         }
 
         loadPath = Application.streamingAssetsPath;
-
-        StartLoading();
     }
 
     //https://answers.unity.com/questions/513582/how-to-iterate-through-every-node-in-xml.html
-    private void StartLoading()
+    public void StartLoading()
     {
         string[] filePaths = Directory.GetFiles(loadPath + "/", "*.xml");
 
@@ -50,9 +44,6 @@ public class LoadData : MonoBehaviour
             for (int i = 0; i < nNodes; i++)
             {
                 var childNode = baseNode.ChildNodes[i];
-                //Debug.Log(childNode.Name); // should print layer_01, layer_02, etc
-               // Debug.Log(baseNode.SelectSingleNode("Location").InnerText); // in the first loop, it will print "first", in the 2nd will print "second", etc
-                // Debug.Log(childNode.SelectSingleNode("GID").InnerText); // in the first loop, will print "1"
 
                 newRootInstance.location = StringToVector3(baseNode.SelectSingleNode("Location").InnerText);
                 newRootInstance.videoURL = baseNode.SelectSingleNode("VideoURL").InnerText;
@@ -79,7 +70,7 @@ public class LoadData : MonoBehaviour
                 }
             }
 
-            loadedData.Add(newRootInstance);
+            WorldManager._instance.loadedData.Add(newRootInstance);
         }
     }
 
@@ -102,6 +93,6 @@ public class LoadData : MonoBehaviour
         float z = 0;
         float.TryParse(seperatedValues[0], out z);
 
-        return new Vector3(x,y,z);
+        return new Vector3(x,y,z) / 50;
     }
 }
