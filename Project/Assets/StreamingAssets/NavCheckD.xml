@@ -1,0 +1,16 @@
+<NavCheckD>
+    <Location>X=880.000 Y=-130.000 Z=-40.000</Location>
+    <VideoURL>INSERT VIDEO URL HERE</VideoURL>
+    <NavCheckB>
+        <Direction>X=-0.810 Y=-0.583 Z=0.065</Direction>
+        <TransitionVideoURL>INSERT VIDEO URL HERE</TransitionVideoURL>
+    </NavCheckB>
+    <NavCheckE>
+        <Direction>X=-0.029 Y=0.999 Z=-0.029</Direction>
+        <TransitionVideoURL>INSERT VIDEO URL HERE</TransitionVideoURL>
+    </NavCheckE>
+    <NavCheckF>
+        <Direction>X=0.912 Y=0.386 Z=0.140</Direction>
+        <TransitionVideoURL>INSERT VIDEO URL HERE</TransitionVideoURL>
+    </NavCheckF>
+</NavCheckD>
