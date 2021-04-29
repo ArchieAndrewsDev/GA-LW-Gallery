@@ -32,7 +32,7 @@ public class UserControl : MonoBehaviour
 
     public void Use(InputAction.CallbackContext context)
     {
-        WorldManager._instance.tryUse = (context.performed);
+        WorldManager._instance.TryMoveToReadyNavPoint();
     }
 
     public void LockMouse(bool lockedState = true)

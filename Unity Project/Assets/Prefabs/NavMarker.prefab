@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8963089217024608278}
   - component: {fileID: 8963089217024608279}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: NavMarker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d832f95bf412394c8b45e498b134252, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
 --- !u!1 &8963089217436528966
 GameObject:
   m_ObjectHideFlags: 0

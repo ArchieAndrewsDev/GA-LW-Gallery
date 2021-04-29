@@ -28,7 +28,9 @@ public class LoadData : MonoBehaviour
     public void StartLoading()
     {
         string[] filePaths = Directory.GetFiles(loadPath + "/", "*.xml");
+        Dictionary<string, int> idList = new Dictionary<string, int>(); //We use this to cache the names and their ids for setting the nav point data id value
 
+        int count = 0;
         foreach (string path in filePaths)
         {
             var doc = new XmlDocument(); // create an empty doc
@@ -40,6 +42,9 @@ public class LoadData : MonoBehaviour
             RootPointData newRootInstance = new RootPointData();
             newRootInstance.name = baseNode.Name;
             newRootInstance.navPointData = new List<NavPointData>();
+
+            idList.Add(newRootInstance.name, count);
+            count++;
 
             for (int i = 0; i < nNodes; i++)
             {
@@ -71,6 +76,15 @@ public class LoadData : MonoBehaviour
             }
 
             WorldManager._instance.loadedData.Add(newRootInstance);
+        }
+
+        //Set ids to the nav point data so we can access their roots faster
+        for (int i = 0; i < WorldManager._instance.loadedData.Count; i++)
+        {
+            for (int y = 0; y < WorldManager._instance.loadedData[i].navPointData.Count; y++)
+            {
+                WorldManager._instance.loadedData[i].navPointData[y].id = idList[WorldManager._instance.loadedData[i].navPointData[y].navPointName];
+            }
         }
     }
 
