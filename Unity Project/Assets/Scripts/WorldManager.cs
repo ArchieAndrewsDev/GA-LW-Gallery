@@ -18,7 +18,6 @@ public class WorldManager : MonoBehaviour
     private List<int> connectedNavPointIds = new List<int>();
     private Vector3 scaleVelocity;
 
-    [HideInInspector]
     public List<RootPointData> loadedData = new List<RootPointData>();
 
     private void Awake()
@@ -36,13 +35,15 @@ public class WorldManager : MonoBehaviour
 
     private void Start()
     {
-        BeginWorldCreation();
+        StartCoroutine(BeginWorldCreation(new WaitUntil(() => LoadData.dataLoaded == true)));
     }
 
-    private void BeginWorldCreation()
+    private IEnumerator BeginWorldCreation(WaitUntil wait)
     {
         loadedData.Clear();
-        LoadData._instance.StartLoading();
+        StartCoroutine(LoadData._instance.GetAllNavCheckSheets());
+
+        yield return wait;
 
         for (int i = 0; i < loadedData.Count; i++)
         {
@@ -84,7 +85,8 @@ public class WorldManager : MonoBehaviour
 
     private void Update()
     {
-        CheckForReadyNavPoint();
+        if(LoadData.dataLoaded && activeId != -1)
+            CheckForReadyNavPoint();
     }
 
     private void CheckForReadyNavPoint()
