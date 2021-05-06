@@ -11,17 +11,13 @@ public class LoadData : MonoBehaviour
 
     private string loadPath;
     private List<string> navCheckSheetPaths = new List<string>();
+    private List<string> loadedXML = new List<string>();
 
     private void Awake()
     {
         if (_instance == null)
         {
             _instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(this);
         }
 
         loadPath = Application.streamingAssetsPath;
@@ -29,7 +25,7 @@ public class LoadData : MonoBehaviour
 
     public IEnumerator GetAllNavCheckSheets()
     {
-        using (UnityWebRequest webRequest = UnityWebRequest.Get("http://localhost/StreamingAssets/FindAllNavSheets.php"))
+        using (UnityWebRequest webRequest = UnityWebRequest.Get("http://138.68.150.78/StreamingAssets/FindAllNavSheets.php"))
         {
             // Request and wait for the desired page.
             yield return webRequest.SendWebRequest();
@@ -39,7 +35,17 @@ public class LoadData : MonoBehaviour
             //Use -1 to leave out the last result which is blank
             for (int i = 0; i < navCheckNames.Length - 1; i++)
             {
-                navCheckSheetPaths.Add(string.Format("http://localhost/StreamingAssets/{0}", navCheckNames[i]));
+                navCheckSheetPaths.Add(string.Format("http://138.68.150.78/StreamingAssets/{0}", navCheckNames[i]));
+            }
+        }
+
+        for (int i = 0; i < navCheckSheetPaths.Count; i++)
+        {
+            using (UnityWebRequest webRequest = UnityWebRequest.Get(navCheckSheetPaths[i]))
+            {
+                // Request and wait for the desired page.
+                yield return webRequest.SendWebRequest();
+                loadedXML.Add(webRequest.downloadHandler.text);
             }
         }
 
@@ -53,10 +59,10 @@ public class LoadData : MonoBehaviour
         Dictionary<string, int> idList = new Dictionary<string, int>(); //We use this to cache the names and their ids for setting the nav point data id value
 
         int count = 0;
-        foreach (string path in navCheckSheetPaths)
+        foreach (string xml in loadedXML)
         {
             XmlDocument doc = new XmlDocument(); // create an empty doc
-            doc.Load(path);            // load the doc, dbPath is a string
+            doc.LoadXml(xml);            // load the doc, dbPath is a string
 
             XmlElement baseNode = doc.DocumentElement; // DocumentElement is the base/head node of all your xml document, in this case, it's Map 
             int nNodes = baseNode.ChildNodes.Count; // since it's a 'node' this means that I could access its "ChildNodes" - which is a List of "XmlNode" - since it's a list, I could get its no. elements by the Count property.

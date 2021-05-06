@@ -9,11 +9,14 @@ public class WorldManager : MonoBehaviour
 
     public GameObject navMarkerPrefab;
     public GameObject userObject;
-    public GameObject videoSphere;
-    public VideoPlayer videoPlayer;
+    public GameObject videoSpherePrefab;
+    public int videoPlayerPoolCount = 3;
     public float navAngle = 25;
     public float minMarkerSize = 2, maxMarkerSize = 4;
+    public Fade fade;
 
+    private List<VideoPlayer> videoPlayerPool = new List<VideoPlayer>();
+    private VideoPlayer activeVideoPlayer;
     private int activeId = -1, readyNavPointId = -1;
     private List<int> connectedNavPointIds = new List<int>();
     private Vector3 scaleVelocity;
@@ -25,17 +28,28 @@ public class WorldManager : MonoBehaviour
         if (_instance == null)
         {
             _instance = this;
-            DontDestroyOnLoad(gameObject);
         }
-        else
-        {
-            Destroy(this);
-        }
+        SetUpVideoPlayerPool();
     }
 
     private void Start()
     {
         StartCoroutine(BeginWorldCreation(new WaitUntil(() => LoadData.dataLoaded == true)));
+    }
+
+    private void SetUpVideoPlayerPool()
+    {
+        for (int i = 0; i < videoPlayerPoolCount; i++)
+        {
+            AddVideoPlayerToPool();
+        }
+    }
+
+    private void AddVideoPlayerToPool()
+    {
+        GameObject clone = Instantiate(videoSpherePrefab);
+        clone.SetActive(false);
+        videoPlayerPool.Add(clone.GetComponent<VideoPlayer>());
     }
 
     private IEnumerator BeginWorldCreation(WaitUntil wait)
@@ -64,8 +78,6 @@ public class WorldManager : MonoBehaviour
         //Remove the conncted ids from the last move
         connectedNavPointIds.Clear();
 
-        //Move the user to the new point and get all the connected ids
-        userObject.transform.position = loadedData[id].location;
         foreach (NavPointData navData in loadedData[id].navPointData)
         {
             connectedNavPointIds.Add(navData.id);
@@ -77,10 +89,41 @@ public class WorldManager : MonoBehaviour
             loadedData[i].marker.SetActive(connectedNavPointIds.Contains(i));
         }
 
-        //Move the video sphere to the new pos
-        videoSphere.transform.position = loadedData[id].location;
-        videoPlayer.url = loadedData[id].videoURL;
-        videoPlayer.Play();
+        VideoPlayer nextVideoPlayer = GetNewVideoPlayer();
+        nextVideoPlayer.url = loadedData[id].videoURL;
+        nextVideoPlayer.transform.position = loadedData[id].location;        //Move the new video sphere to the new pos
+        nextVideoPlayer.prepareCompleted += ClearOldVideoPlayer;
+        nextVideoPlayer.Play();
+    }
+
+    private void ClearOldVideoPlayer(VideoPlayer vp)
+    {
+        if(activeVideoPlayer != null)
+        {
+            activeVideoPlayer.Stop();
+            activeVideoPlayer.gameObject.SetActive(false);
+            activeVideoPlayer.prepareCompleted -= ClearOldVideoPlayer;
+        }
+
+        activeVideoPlayer = vp;
+        //Move the user to the new point
+        userObject.transform.position = vp.transform.position;
+        fade.FadeIn();
+    }
+
+    private VideoPlayer GetNewVideoPlayer()
+    {
+        for (int i = 0; i < videoPlayerPool.Count; i++)
+        {
+            if (videoPlayerPool[i].gameObject.activeSelf == false)
+            {
+                videoPlayerPool[i].gameObject.SetActive(true);
+                return videoPlayerPool[i];
+            }
+        }
+
+        AddVideoPlayerToPool();
+        return GetNewVideoPlayer();
     }
 
     private void Update()
@@ -126,6 +169,7 @@ public class WorldManager : MonoBehaviour
         if (readyNavPointId == -1)
             return;
 
-        MoveTo(readyNavPointId);
+        fade.FadeOut();
+        fade.OnFadeOut.AddListener(() => MoveTo(readyNavPointId));
     }
 }
