@@ -1,8 +1,8 @@
 <NavCheckC>
-    <Location>X=610.000 Y=200.000 Z=-40.000</Location>
-    <VideoURL>https://expomuseum.fra1.digitaloceanspaces.com/360%20test2.mp4</VideoURL>
-    <NavCheckB>
-        <Direction>X=0.039 Y=-0.998 Z=0.039</Direction>
+    <Location>X=-2150.000 Y=-5260.000 Z=960.000</Location>
+    <VideoURL>https://expomuseum.fra1.digitaloceanspaces.com/NavCheck6_video.avi</VideoURL>
+    <NavCheckA>
+        <Direction>X=0.884 Y=0.097 Z=-0.456</Direction>
         <TransitionVideoURL>INSERT VIDEO URL HERE</TransitionVideoURL>
-    </NavCheckB>
+    </NavCheckA>
 </NavCheckC>

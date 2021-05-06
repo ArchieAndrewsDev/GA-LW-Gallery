@@ -1,8 +1,12 @@
 <NavCheckA>
-    <Location>X=1110.000 Y=-520.000 Z=-30.000</Location>
-    <VideoURL>https://expomuseum.fra1.digitaloceanspaces.com/360%20test2.mp4</VideoURL>
-    <NavCheckB>
-        <Direction>X=-0.916 Y=0.401 Z=0.019</Direction>
+    <Location>X=-600.000 Y=-5090.000 Z=160.000</Location>
+    <VideoURL>https://expomuseum.fra1.digitaloceanspaces.com/NavCheck_Video.avi</VideoURL>
+    <NavCheckC>
+        <Direction>X=-0.884 Y=-0.097 Z=0.456</Direction>
         <TransitionVideoURL>INSERT VIDEO URL HERE</TransitionVideoURL>
-    </NavCheckB>
+    </NavCheckC>
+    <StudentEnvA_Outside>
+        <Direction>X=-0.150 Y=0.989 Z=0.000</Direction>
+        <TransitionVideoURL>INSERT VIDEO URL HERE</TransitionVideoURL>
+    </StudentEnvA_Outside>
 </NavCheckA>

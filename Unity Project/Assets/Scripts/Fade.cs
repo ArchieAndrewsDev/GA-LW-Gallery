@@ -8,15 +8,28 @@ public class Fade : MonoBehaviour
     public static Fade _instance;
 
     public Image fadeImage;
+    public Image loadingWheel;
     public UnityEvent OnFadeOut, OnFadeIn;
     public float fadeTime = .5f;
 
+    private Color fadeColorStart, fadeColorEnd;
+    private Color loadingWheelColorStart, loadingWheelColorEnd;
     private float fadePercentage = 1;
     private bool isFading = false;
 
     private void Awake()
     {
         _instance = this;
+
+        fadeColorStart = fadeImage.color;
+        fadeColorStart.a = 1;
+        fadeColorEnd = fadeColorStart;
+        fadeColorEnd.a = 0;
+
+        loadingWheelColorStart = loadingWheel.color;
+        loadingWheelColorStart.a = 1;
+        loadingWheelColorEnd = loadingWheelColorStart;
+        loadingWheelColorEnd.a = 0;
     }
 
     public void FadeOut()
@@ -44,7 +57,8 @@ public class Fade : MonoBehaviour
             if (fadePercentage < 1)
                 fadePercentage += Time.deltaTime / fadeTime;
 
-            fadeImage.color = new Color(0,0,0,fadePercentage);
+            fadeImage.color = Color.Lerp(fadeColorEnd, fadeColorStart, fadePercentage);
+            loadingWheel.color = Color.Lerp(loadingWheelColorEnd, loadingWheelColorStart, fadePercentage);
             yield return null;
 
             if (fadePercentage >= 1)
@@ -67,7 +81,8 @@ public class Fade : MonoBehaviour
             if (fadePercentage > 0)
                 fadePercentage -= Time.deltaTime / fadeTime;
 
-            fadeImage.color = new Color(0, 0, 0, fadePercentage);
+            fadeImage.color = Color.Lerp(fadeColorEnd, fadeColorStart, fadePercentage);
+            loadingWheel.color = Color.Lerp(loadingWheelColorEnd, loadingWheelColorStart, fadePercentage);
             yield return null;
 
             if (fadePercentage <= 0)

@@ -27,7 +27,7 @@ public class UserControl : MonoBehaviour
         if (context.phase == InputActionPhase.Performed || lockMouse)
             runApplyRotation = true;
         else
-            runApplyRotation = false;   
+            runApplyRotation = false;
     }
 
     public void Use(InputAction.CallbackContext context)
@@ -51,6 +51,7 @@ public class UserControl : MonoBehaviour
             LockMouse(lockMouse);
 
         lockMouseLastFrame = lockMouse;
+        Cursor.visible = !runApplyRotation;
     }
 
     private void ApplyRotation()
