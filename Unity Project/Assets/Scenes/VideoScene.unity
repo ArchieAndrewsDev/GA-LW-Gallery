@@ -207,7 +207,6 @@ GameObject:
   m_Component:
   - component: {fileID: 220739724}
   - component: {fileID: 220739728}
-  - component: {fileID: 220739727}
   - component: {fileID: 220739726}
   - component: {fileID: 220739725}
   m_Layer: 0
@@ -342,6 +341,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: f1a8962f-0abb-4b17-bf96-28a629113410
     m_ActionName: User/Use[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 97dc7520-adec-46f6-a9f0-9f35b7c9ea9c
+    m_ActionName: User/Press[/Mouse/leftButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: User
@@ -363,14 +366,6 @@ MonoBehaviour:
   minY: -80
   maxY: 80
   lockMouse: 0
---- !u!81 &220739727
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 220739723}
-  m_Enabled: 1
 --- !u!20 &220739728
 Camera:
   m_ObjectHideFlags: 0
@@ -427,6 +422,7 @@ GameObject:
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
   - component: {fileID: 963194230}
+  - component: {fileID: 963194231}
   m_Layer: 0
   m_Name: UserCamera
   m_TagString: UserCamera
@@ -625,17 +621,61 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 963194231}
+        m_MethodName: Click
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: f1a8962f-0abb-4b17-bf96-28a629113410
     m_ActionName: User/Use[/Keyboard/space]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 97dc7520-adec-46f6-a9f0-9f35b7c9ea9c
     m_ActionName: User/Press[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 963194231}
+        m_MethodName: OnMouseMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 93f5ad00-8bea-4f69-a637-e4cf17fdb0fc
+    m_ActionName: User/New action
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: User
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &963194231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f7452a76d427cb4cb9e837ff47c5050, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layer:
+    serializedVersion: 2
+    m_Bits: 256
+  cam: {fileID: 963194227}
+  clicked: 0
+  mousePos: {x: 0, y: 0}
 --- !u!1 &1401571753
 GameObject:
   m_ObjectHideFlags: 0
@@ -889,7 +929,7 @@ MonoBehaviour:
   OnFadeIn:
     m_PersistentCalls:
       m_Calls: []
-  fadeTime: 0.5
+  fadeTime: 0.1
 --- !u!1001 &6119929824729663707
 PrefabInstance:
   m_ObjectHideFlags: 0

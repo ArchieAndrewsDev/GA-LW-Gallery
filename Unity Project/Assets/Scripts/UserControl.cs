@@ -30,11 +30,6 @@ public class UserControl : MonoBehaviour
             runApplyRotation = false;
     }
 
-    public void Use(InputAction.CallbackContext context)
-    {
-        WorldManager._instance.TryMoveToReadyNavPoint();
-    }
-
     public void LockMouse(bool lockedState = true)
     {
         lockMouse = lockedState;

@@ -12,7 +12,7 @@ public class WorldManager : MonoBehaviour
     public GameObject videoSpherePrefab;
     public int videoPlayerPoolCount = 3;
     public float navAngle = 25;
-    public float minMarkerSize = 2, maxMarkerSize = 4;
+    public float minMarkerSize = 2;
     public Fade fade;
 
     private List<VideoPlayer> videoPlayerPool = new List<VideoPlayer>();
@@ -67,6 +67,19 @@ public class WorldManager : MonoBehaviour
         MoveTo(0);
     }
 
+    public void TryMoveToNavPoint(GameObject marker)
+    {
+        for (int i = 0; i < loadedData.Count; i++)
+        {
+            Debug.Log(string.Format("{0} == {1}", loadedData[i].marker.name, marker.transform.parent.name));
+            if (loadedData[i].marker.name == marker.transform.parent.name)
+            {
+                TryMoveToNavPoint(i);
+                return;
+            }
+        }
+    }
+
     private void MoveTo(int id)
     {
         if (id >= loadedData.Count || activeId == id)
@@ -94,6 +107,8 @@ public class WorldManager : MonoBehaviour
         nextVideoPlayer.transform.position = loadedData[id].location;        //Move the new video sphere to the new pos
         nextVideoPlayer.prepareCompleted += ClearOldVideoPlayer;
         nextVideoPlayer.Play();
+
+        UpdateMarkerSize();
     }
 
     private void ClearOldVideoPlayer(VideoPlayer vp)
@@ -126,25 +141,14 @@ public class WorldManager : MonoBehaviour
         return GetNewVideoPlayer();
     }
 
-    private void Update()
+    private void UpdateMarkerSize()
     {
-        if(LoadData.dataLoaded && activeId != -1)
-            CheckForReadyNavPoint();
-    }
-
-    private void CheckForReadyNavPoint()
-    {
-        float returnAngle = 0;
-        readyNavPointId = -1;
+        float size = minMarkerSize;
         foreach (NavPointData navData in loadedData[activeId].navPointData)
         {
-            if (CheckAngle(navData.direction, navAngle, out returnAngle))
-            {
-                loadedData[navData.id].marker.transform.localScale = Vector3.one * Mathf.Lerp(maxMarkerSize, minMarkerSize, returnAngle / navAngle);
-                readyNavPointId = navData.id;
-            }
-            else
-                loadedData[navData.id].marker.transform.localScale = Vector3.one * minMarkerSize;
+            size = .1f * Vector3.Distance(loadedData[navData.id].marker.transform.position, loadedData[activeId].marker.transform.position);
+            size = Mathf.Clamp(size, minMarkerSize, Mathf.Infinity);
+            loadedData[navData.id].marker.transform.localScale = Vector3.one * size;
         }
     }
 
@@ -164,12 +168,12 @@ public class WorldManager : MonoBehaviour
     }
 
     //This is mainly called from UserControl.cs
-    public void TryMoveToReadyNavPoint()
+    public void TryMoveToNavPoint(int id)
     {
-        if (readyNavPointId == -1)
+        if (id == -1)
             return;
 
         fade.FadeOut();
-        fade.OnFadeOut.AddListener(() => MoveTo(readyNavPointId));
+        fade.OnFadeOut.AddListener(() => MoveTo(id));
     }
 }
