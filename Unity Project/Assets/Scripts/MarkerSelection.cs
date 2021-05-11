@@ -12,6 +12,8 @@ public class MarkerSelection : MonoBehaviour
     public bool isHovering = false;
     public Vector2 mousePos;
 
+    private MarkerHighlight lastMarker;
+
     public void OnMouseMove(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -34,10 +36,22 @@ public class MarkerSelection : MonoBehaviour
         if (Physics.Raycast(ray, out hit, layer))
         {
             isHovering = true;
+
+            if (lastMarker == null)
+            {
+                lastMarker = hit.collider.GetComponent<MarkerHighlight>();
+                lastMarker.Highlight();
+            }
         }
         else
         {
             isHovering = false;
+
+            if(lastMarker != null)
+            {
+                lastMarker.Highlight(false);
+                lastMarker = null;
+            }
         }
     }
 }

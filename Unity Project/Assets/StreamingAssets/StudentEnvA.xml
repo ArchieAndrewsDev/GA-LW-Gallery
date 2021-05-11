@@ -1,6 +1,16 @@
 <StudentEnvA>
     <Location>X=-70.000 Y=-3900.000 Z=160.000</Location>
-    <VideoURL>https://expomuseum.fra1.digitaloceanspaces.com/student1_Video.avi</VideoURL>
+    <VideoURLHigh>INSERT VIDEO URL HERE</VideoURLHigh>
+    <VideoURLMedium>INSERT VIDEO URL HERE</VideoURLMedium>
+    <VideoURLLow>INSERT VIDEO URL HERE</VideoURLLow>
+    <NavCheckC>
+        <Direction>X=-0.797 Y=-0.521 Z=0.306</Direction>
+        <TransitionVideoURL>INSERT VIDEO URL HERE</TransitionVideoURL>
+    </NavCheckC>
+    <NavCheckA>
+        <Direction>X=-0.407 Y=-0.913 Z=0.000</Direction>
+        <TransitionVideoURL>INSERT VIDEO URL HERE</TransitionVideoURL>
+    </NavCheckA>
     <StudentEnvA_Outside>
         <Direction>X=-1.000 Y=0.000 Z=0.000</Direction>
         <TransitionVideoURL>INSERT VIDEO URL HERE</TransitionVideoURL>

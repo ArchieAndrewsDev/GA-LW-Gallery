@@ -55,7 +55,6 @@ public class LoadData : MonoBehaviour
     //https://answers.unity.com/questions/513582/how-to-iterate-through-every-node-in-xml.html
     public void StartLoading()
     {
-        //string[] filePaths = Directory.GetFiles(loadPath + "/", "*.xml");
         Dictionary<string, int> idList = new Dictionary<string, int>(); //We use this to cache the names and their ids for setting the nav point data id value
 
         int count = 0;
@@ -79,9 +78,11 @@ public class LoadData : MonoBehaviour
                 var childNode = baseNode.ChildNodes[i];
 
                 newRootInstance.location = StringToVector3(baseNode.SelectSingleNode("Location").InnerText);
-                newRootInstance.videoURL = baseNode.SelectSingleNode("VideoURL").InnerText;
+                newRootInstance.videoURLHigh = baseNode.SelectSingleNode("VideoURLHigh").InnerText;
+                newRootInstance.videoURLMedium = baseNode.SelectSingleNode("VideoURLMedium").InnerText;
+                newRootInstance.videoURLLow = baseNode.SelectSingleNode("VideoURLLow").InnerText;
 
-                if (childNode.Name != "Location" && childNode.Name != "VideoURL")
+                if (childNode.Name != "Location" && childNode.Name != "VideoURLHigh" && childNode.Name != "VideoURLMedium" && childNode.Name != "VideoURLLow")
                 {
                     NavPointData newNavPointInstance = new NavPointData();
                     newNavPointInstance.navPointName = childNode.Name;

@@ -5,9 +5,14 @@ using UnityEngine.InputSystem;
 
 public class UserControl : MonoBehaviour
 {
+    public static UserControl _instance;
+
     public float rotationSpeed = 30;
     public float minY, maxY;
     public bool lockMouse = false;
+
+    [HideInInspector]
+    public bool runCamera = true;
 
     private Vector3 curEuler;
     private Vector3 inputRot;
@@ -15,6 +20,11 @@ public class UserControl : MonoBehaviour
 
     private bool runApplyRotation = false;
     private Vector3 moveDir;
+
+    private void Awake()
+    {
+        _instance = this;
+    }
 
     public void Look(InputAction.CallbackContext context)
     {
@@ -39,6 +49,9 @@ public class UserControl : MonoBehaviour
 
     private void Update()
     {
+        if (!runCamera)
+            return;
+
         if (runApplyRotation)
             ApplyRotation();
 
@@ -51,7 +64,7 @@ public class UserControl : MonoBehaviour
 
     private void ApplyRotation()
     {
-        inputRot = moveDir * rotationSpeed * Time.deltaTime;
+        inputRot = (moveDir * rotationSpeed) * Time.deltaTime;
 
         curEuler.y = (lockMouse) ? curEuler.y + inputRot.x : curEuler.y - inputRot.x;
         curEuler.x = (lockMouse) ? Mathf.Clamp(curEuler.x - inputRot.y, minY, maxY) : Mathf.Clamp(curEuler.x + inputRot.y, minY, maxY);

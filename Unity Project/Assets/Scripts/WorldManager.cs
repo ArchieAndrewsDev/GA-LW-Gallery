@@ -14,12 +14,14 @@ public class WorldManager : MonoBehaviour
     public float navAngle = 25;
     public float minMarkerSize = 2;
     public Fade fade;
+    public VideoQuality defaultVideoQuality = VideoQuality.High;
 
     private List<VideoPlayer> videoPlayerPool = new List<VideoPlayer>();
     private VideoPlayer activeVideoPlayer;
     private int activeId = -1, readyNavPointId = -1;
     private List<int> connectedNavPointIds = new List<int>();
     private Vector3 scaleVelocity;
+    private float volumeCache = 1;
 
     public List<RootPointData> loadedData = new List<RootPointData>();
 
@@ -49,7 +51,9 @@ public class WorldManager : MonoBehaviour
     {
         GameObject clone = Instantiate(videoSpherePrefab);
         clone.SetActive(false);
-        videoPlayerPool.Add(clone.GetComponent<VideoPlayer>());
+        VideoPlayer vp = clone.GetComponent<VideoPlayer>();
+        videoPlayerPool.Add(vp);
+        vp.SetDirectAudioVolume(0, volumeCache);
     }
 
     private IEnumerator BeginWorldCreation(WaitUntil wait)
@@ -80,10 +84,19 @@ public class WorldManager : MonoBehaviour
         }
     }
 
+    public void ChangeQualitySettings(VideoQuality quality)
+    {
+        defaultVideoQuality = quality;
+        TryMoveToNavPoint(activeId);
+    }
+
     private void MoveTo(int id)
     {
-        if (id >= loadedData.Count || activeId == id)
+        if (id >= loadedData.Count)
+        {
+            fade.FadeIn();
             return;
+        }
 
         //Store the active id
         activeId = id;
@@ -103,7 +116,7 @@ public class WorldManager : MonoBehaviour
         }
 
         VideoPlayer nextVideoPlayer = GetNewVideoPlayer();
-        nextVideoPlayer.url = loadedData[id].videoURL;
+        nextVideoPlayer.url = loadedData[id].GetVideoURL(defaultVideoQuality);
         nextVideoPlayer.transform.position = loadedData[id].location;        //Move the new video sphere to the new pos
         nextVideoPlayer.prepareCompleted += ClearOldVideoPlayer;
         nextVideoPlayer.Play();
@@ -175,5 +188,16 @@ public class WorldManager : MonoBehaviour
 
         fade.FadeOut();
         fade.OnFadeOut.AddListener(() => MoveTo(id));
+    }
+
+    public void SetVideoPlayerVolume(float volume)
+    {
+        //Cache the volume so that we can set it for players added to the pool
+        volumeCache = volume;
+
+        for (int i = 0; i < videoPlayerPool.Count; i++)
+        {
+            videoPlayerPool[i].SetDirectAudioVolume(0, volume);
+        }
     }
 }
