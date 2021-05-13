@@ -352,7 +352,18 @@ MonoBehaviour:
     m_ActionId: 45683aee-3e33-4cef-a757-59d86afcdac6
     m_ActionName: User/Grab[/Mouse/leftButton]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 799466786}
+        m_MethodName: Load
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: f1a8962f-0abb-4b17-bf96-28a629113410
     m_ActionName: User/Use[/Keyboard/space]
   - m_PersistentCalls:
@@ -396,20 +407,13 @@ MonoBehaviour:
     m_ActionId: 13113772-a961-41c1-aed0-c85346043eb0
     m_ActionName: UI/TrackedDeviceOrientation
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 799466786}
-        m_MethodName: Load
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 97dc7520-adec-46f6-a9f0-9f35b7c9ea9c
-    m_ActionName: User/Press[/Mouse/leftButton]
+      m_Calls: []
+    m_ActionId: 93f5ad00-8bea-4f69-a637-e4cf17fdb0fc
+    m_ActionName: User/MouseMove[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ebb39109-e8b7-492f-8ef5-26f79c663336
+    m_ActionName: User/UseAction[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: User

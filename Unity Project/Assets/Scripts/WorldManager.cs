@@ -200,4 +200,12 @@ public class WorldManager : MonoBehaviour
             videoPlayerPool[i].SetDirectAudioVolume(0, volume);
         }
     }
+
+    public void RunActionOnActiveNavPoint()
+    {
+        if (loadedData[activeId].interactionURL == "")
+            return;
+
+        Application.OpenURL(loadedData[activeId].interactionURL);
+    }
 }

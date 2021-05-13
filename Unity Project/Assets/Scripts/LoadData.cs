@@ -81,8 +81,9 @@ public class LoadData : MonoBehaviour
                 newRootInstance.videoURLHigh = baseNode.SelectSingleNode("VideoURLHigh").InnerText;
                 newRootInstance.videoURLMedium = baseNode.SelectSingleNode("VideoURLMedium").InnerText;
                 newRootInstance.videoURLLow = baseNode.SelectSingleNode("VideoURLLow").InnerText;
+                newRootInstance.interactionURL = baseNode.SelectSingleNode("InteractionLink").InnerText;
 
-                if (childNode.Name != "Location" && childNode.Name != "VideoURLHigh" && childNode.Name != "VideoURLMedium" && childNode.Name != "VideoURLLow")
+                if (childNode.Name != "Location" && childNode.Name != "VideoURLHigh" && childNode.Name != "VideoURLMedium" && childNode.Name != "VideoURLLow" && childNode.Name != "InteractionLink")
                 {
                     NavPointData newNavPointInstance = new NavPointData();
                     newNavPointInstance.navPointName = childNode.Name;

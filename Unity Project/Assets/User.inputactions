@@ -22,17 +22,9 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Use",
+                    "name": "MoveTo",
                     "type": "Button",
                     "id": "f1a8962f-0abb-4b17-bf96-28a629113410",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "Press",
-                    "type": "Button",
-                    "id": "97dc7520-adec-46f6-a9f0-9f35b7c9ea9c",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -42,6 +34,14 @@
                     "type": "Value",
                     "id": "93f5ad00-8bea-4f69-a637-e4cf17fdb0fc",
                     "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "UseAction",
+                    "type": "Button",
+                    "id": "ebb39109-e8b7-492f-8ef5-26f79c663336",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 }
@@ -76,18 +76,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Use",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f2b17696-1150-4c16-be45-58b5569851e1",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Press",
+                    "action": "MoveTo",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -99,6 +88,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "MouseMove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "63c79a2b-515e-4a5d-ac32-21601a7e7865",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UseAction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

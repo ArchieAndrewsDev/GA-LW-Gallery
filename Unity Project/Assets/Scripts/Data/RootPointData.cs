@@ -8,6 +8,7 @@ public class RootPointData
     public Vector3 location;
     public string videoURLLow, videoURLMedium, videoURLHigh;
     public GameObject marker;
+    public string interactionURL;
 
     public List<NavPointData> navPointData;
 

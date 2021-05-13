@@ -1,8 +1,9 @@
 <NavCheckB>
     <Location>X=-2060.000 Y=-3830.000 Z=160.000</Location>
-    <VideoURLHigh>INSERT VIDEO URL HERE</VideoURLHigh>
-    <VideoURLMedium>INSERT VIDEO URL HERE</VideoURLMedium>
-    <VideoURLLow>INSERT VIDEO URL HERE</VideoURLLow>
+    <VideoURLHigh>https://expomuseum.fra1.digitaloceanspaces.com/NavCheckB_High.mp4</VideoURLHigh>
+    <VideoURLMedium>https://expomuseum.fra1.digitaloceanspaces.com/NavCheckB_Medium.mp4</VideoURLMedium>
+    <VideoURLLow>https://expomuseum.fra1.digitaloceanspaces.com/NavCheckB_Low.mp4</VideoURLLow>
+    <InteractionLink></InteractionLink>
     <StudentEnvA_Outside>
         <Direction>X=0.999 Y=-0.055 Z=0.000</Direction>
         <TransitionVideoURL>INSERT VIDEO URL HERE</TransitionVideoURL>

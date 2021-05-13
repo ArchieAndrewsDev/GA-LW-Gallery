@@ -71,4 +71,13 @@ public class UserControl : MonoBehaviour
 
         transform.eulerAngles = curEuler;
     }
+
+    public void TryUseAction(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            Debug.Log("Try Use");
+            WorldManager._instance.RunActionOnActiveNavPoint();
+        }
+    }
 }
