@@ -26,6 +26,7 @@ public class MarkerSelection : MonoBehaviour
     {
         if (context.canceled && isHovering)
         {
+            UIManager._instance.ShowPrompt(PromptType.Move, false);
             WorldManager._instance.TryMoveToNavPoint(hit.collider.gameObject);
         }
     }

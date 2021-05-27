@@ -6,9 +6,11 @@ public class RootPointData
 {
     public string name;
     public Vector3 location;
-    public string videoURLLow, videoURLMedium, videoURLHigh;
+    public string videoURLMedium, videoURLHigh;
     public GameObject marker;
     public string interactionURL;
+    public string metaTitle;
+    public string metaText;
 
     public List<NavPointData> navPointData;
 
@@ -20,8 +22,6 @@ public class RootPointData
                 return videoURLHigh;
             case VideoQuality.Medium:
                 return videoURLMedium;
-            case VideoQuality.Low:
-                return videoURLLow;
         }
 
         return videoURLHigh;

@@ -5,11 +5,22 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager _instance;
+
     public GameObject settingsButtonRoot;
     public GameObject settingsWindowRoot;
 
     public Slider volumeSlider;
     public Dropdown dropDown;
+
+    public GameObject urlPrompt, movePrompt;
+    public Text metaTitle, metaText;
+    public GameObject metaRoot;
+
+    private void Awake()
+    {
+        _instance = this;
+    }
 
     public void OpenSettings()
     {
@@ -44,9 +55,33 @@ public class UIManager : MonoBehaviour
             case 1:
                 WorldManager._instance.ChangeQualitySettings(VideoQuality.Medium);
                 break;
-            case 2:
-                WorldManager._instance.ChangeQualitySettings(VideoQuality.Low);
+        }
+    }
+
+    public void ShowPrompt(PromptType type, bool show = true)
+    {
+        switch (type)
+        {
+            case PromptType.URL:
+                urlPrompt.SetActive(show);
+                break;
+            case PromptType.Move:
+                movePrompt.SetActive(show);
                 break;
         }
     }
+
+    public void SetMetaData(string title, string text)
+    {
+        metaRoot.SetActive(true);
+        metaTitle.text = title;
+        metaText.text = text;
+    }
+
+    public void EnableMetaData(bool show = true)
+    {
+        metaRoot.SetActive(show);
+    }
 }
+
+public enum PromptType { URL, Move}

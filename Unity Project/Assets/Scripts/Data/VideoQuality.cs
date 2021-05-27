@@ -1,4 +1,4 @@
 ﻿public enum VideoQuality
 {
-    High, Medium, Low
+    High, Medium
 }

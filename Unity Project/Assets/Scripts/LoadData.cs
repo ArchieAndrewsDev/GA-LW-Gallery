@@ -13,6 +13,9 @@ public class LoadData : MonoBehaviour
     private List<string> navCheckSheetPaths = new List<string>();
     private List<string> loadedXML = new List<string>();
 
+    private const string ip = "gallery.falmouth.games";
+    private List<string> fixedTags = new List<string>();
+
     private void Awake()
     {
         if (_instance == null)
@@ -21,11 +24,18 @@ public class LoadData : MonoBehaviour
         }
 
         loadPath = Application.streamingAssetsPath;
+
+        fixedTags.Add("Location");
+        fixedTags.Add("VideoURLHigh");
+        fixedTags.Add("VideoURLMedium");
+        fixedTags.Add("InteractionLink");
+        fixedTags.Add("MetaTitle");
+        fixedTags.Add("MetaText");
     }
 
     public IEnumerator GetAllNavCheckSheets()
     {
-        using (UnityWebRequest webRequest = UnityWebRequest.Get("http://138.68.150.78/StreamingAssets/FindAllNavSheets.php"))
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(string.Format("https://{0}/StreamingAssets/FindAllNavSheets.php", ip)))
         {
             // Request and wait for the desired page.
             yield return webRequest.SendWebRequest();
@@ -35,7 +45,7 @@ public class LoadData : MonoBehaviour
             //Use -1 to leave out the last result which is blank
             for (int i = 0; i < navCheckNames.Length - 1; i++)
             {
-                navCheckSheetPaths.Add(string.Format("http://138.68.150.78/StreamingAssets/{0}", navCheckNames[i]));
+                navCheckSheetPaths.Add(string.Format("https://{0}/StreamingAssets/{1}", ip, navCheckNames[i]));
             }
         }
 
@@ -61,6 +71,7 @@ public class LoadData : MonoBehaviour
         foreach (string xml in loadedXML)
         {
             XmlDocument doc = new XmlDocument(); // create an empty doc
+            Debug.Log(xml);
             doc.LoadXml(xml);            // load the doc, dbPath is a string
 
             XmlElement baseNode = doc.DocumentElement; // DocumentElement is the base/head node of all your xml document, in this case, it's Map 
@@ -80,10 +91,11 @@ public class LoadData : MonoBehaviour
                 newRootInstance.location = StringToVector3(baseNode.SelectSingleNode("Location").InnerText);
                 newRootInstance.videoURLHigh = baseNode.SelectSingleNode("VideoURLHigh").InnerText;
                 newRootInstance.videoURLMedium = baseNode.SelectSingleNode("VideoURLMedium").InnerText;
-                newRootInstance.videoURLLow = baseNode.SelectSingleNode("VideoURLLow").InnerText;
                 newRootInstance.interactionURL = baseNode.SelectSingleNode("InteractionLink").InnerText;
+                newRootInstance.metaTitle = baseNode.SelectSingleNode("MetaTitle").InnerText;
+                newRootInstance.metaText = baseNode.SelectSingleNode("MetaText").InnerText;
 
-                if (childNode.Name != "Location" && childNode.Name != "VideoURLHigh" && childNode.Name != "VideoURLMedium" && childNode.Name != "VideoURLLow" && childNode.Name != "InteractionLink")
+                if (!fixedTags.Contains(childNode.Name))
                 {
                     NavPointData newNavPointInstance = new NavPointData();
                     newNavPointInstance.navPointName = childNode.Name;

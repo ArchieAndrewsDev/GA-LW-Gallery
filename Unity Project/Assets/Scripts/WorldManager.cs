@@ -122,6 +122,17 @@ public class WorldManager : MonoBehaviour
         nextVideoPlayer.Play();
 
         UpdateMarkerSize();
+
+        UIManager._instance.ShowPrompt(PromptType.URL, (loadedData[id].interactionURL != ""));
+
+        if(loadedData[id].metaText != "" || loadedData[id].metaTitle != "")
+        {
+            UIManager._instance.SetMetaData(loadedData[id].metaTitle, loadedData[id].metaText);
+        }
+        else
+        {
+            UIManager._instance.EnableMetaData(false);
+        }
     }
 
     private void ClearOldVideoPlayer(VideoPlayer vp)
