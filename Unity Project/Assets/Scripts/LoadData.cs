@@ -13,7 +13,7 @@ public class LoadData : MonoBehaviour
     private List<string> navCheckSheetPaths = new List<string>();
     private List<string> loadedXML = new List<string>();
 
-    private const string ip = "gallery.falmouth.games";
+    private string ip = "";
     private List<string> fixedTags = new List<string>();
 
     private void Awake()
@@ -22,6 +22,8 @@ public class LoadData : MonoBehaviour
         {
             _instance = this;
         }
+
+        ip = Application.absoluteURL;
 
         loadPath = Application.streamingAssetsPath;
 
@@ -35,7 +37,7 @@ public class LoadData : MonoBehaviour
 
     public IEnumerator GetAllNavCheckSheets()
     {
-        using (UnityWebRequest webRequest = UnityWebRequest.Get(string.Format("https://{0}/StreamingAssets/FindAllNavSheets.php", ip)))
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(string.Format("{0}/StreamingAssets/FindAllNavSheets.php", ip)))
         {
             // Request and wait for the desired page.
             yield return webRequest.SendWebRequest();
@@ -45,7 +47,7 @@ public class LoadData : MonoBehaviour
             //Use -1 to leave out the last result which is blank
             for (int i = 0; i < navCheckNames.Length - 1; i++)
             {
-                navCheckSheetPaths.Add(string.Format("https://{0}/StreamingAssets/{1}", ip, navCheckNames[i]));
+                navCheckSheetPaths.Add(string.Format("{0}/StreamingAssets/{1}", ip, navCheckNames[i]));
             }
         }
 
